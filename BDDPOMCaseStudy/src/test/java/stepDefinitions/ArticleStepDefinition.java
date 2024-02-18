@@ -15,9 +15,10 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.CreateNewArticlePage;
 import pages.Dashboard;
-import pages.EditPage;
+import pages.DeleteArticlePage;
 import pages.HomePage;
 import pages.LoginPage;
+import pages.UpdateArticlePage;
 import pages.ViewArticlePage;
 
 public class ArticleStepDefinition {
@@ -26,8 +27,9 @@ public class ArticleStepDefinition {
     LoginPage loginPage;
     Dashboard dashboard;
     CreateNewArticlePage crnwArticle;
-    ViewArticlePage upArticle;
-    EditPage edpage;
+    ViewArticlePage vwpage;
+    DeleteArticlePage deleteArticlePage;
+    UpdateArticlePage updateArticlePage;
     
     public ArticleStepDefinition()
     {TestBase.initDriver();
@@ -37,8 +39,9 @@ public class ArticleStepDefinition {
 		  loginPage=new LoginPage(driver); 
 		  dashboard=new Dashboard(driver);
 		  crnwArticle=new CreateNewArticlePage(driver);
-		  upArticle=new ViewArticlePage(driver);
-		  edpage=new EditPage(driver);
+		  deleteArticlePage= new  DeleteArticlePage(driver);
+		  updateArticlePage=new UpdateArticlePage(driver);
+		  vwpage=new ViewArticlePage(driver);
     }
 
     @Given("User is on the login Page")
@@ -116,48 +119,45 @@ public class ArticleStepDefinition {
     }
     @Then("Should display the new Article Title")
     public void should_display_the_new_article_title() {
-    	 Assert.assertEquals(upArticle.getHeading(),"arti");
+    	 Assert.assertEquals(vwpage.getHeading(),"arti");
     }
     
     @Given("User is on updateArticlePage")
-    public void user_is_on_update_article_page(DataTable dataTable) {
-    	List<Map<String,String>> article=dataTable.asMaps();
-    	String articleTitle=article.get(0).get("articleTitle");
-    	System.out.println(articleTitle);
-    	dashboard.navigateToglobalFeed();
-    	WebElement search=dashboard.locateArticle(articleTitle);
-    	dashboard.searchArticle(search);
-    	 upArticle.navigateToEditArticle();
+    public void user_is_on_update_article_page() {
+    	updateArticlePage.homePage();
        
     }
     @When("User Update the Article")
-    public void user_update_the_article(io.cucumber.datatable.DataTable dataTable) {
+    public void user_update_the_article(DataTable dataTable) {
     	List<Map<String,String>> article=dataTable.asMaps();
-    	String articleBody=article.get(0).get("articleBody");
-    	 edpage.update(articleBody);
+		String articleTitle=article.get(0).get("articleTitle");
+		String updatebody=article.get(0).get("articleBody");
+
+		WebElement locateArticle=updateArticlePage.articleTitleElement(driver,articleTitle);
+		updateArticlePage.update(locateArticle,updatebody);
+    	
     }
     @Then("Should display the updated Article Title")
-    public void should_display_the_updated_article_title() {
-    	 Assert.assertEquals(upArticle.upBody(),"automation in testing");
+    public void should_display_the_updated_article_title(DataTable dataTable) {
+    	List<String> msgs=dataTable.asList();
+		String expmsg=msgs.get(0);
+		WebElement upele=updateArticlePage.getUpdateArticleElement(driver, expmsg);
+		Assert.assertEquals(updateArticlePage.updateArticleValidate(upele),expmsg);
     }
     
     @Given("User is on deleteArticlePage")
-    public void user_is_on_delete_article_page(DataTable dataTable) {
-    	List<Map<String,String>> article1=dataTable.asMaps();
-    	String articleTi=article1.get(0).get("articleTitle");
-    	System.out.println(articleTi);
-   
-    	dashboard.navigateToglobalFeed();;
-    
-    	WebElement search=dashboard.locateArticle(articleTi);
-    	dashboard.searchArticle(search);
+    public void user_is_on_delete_article_page() {
+    	deleteArticlePage.home();
     }
     @When("User delete the Article")
-    public void user_delete_the_article() {
-    	upArticle.deleteArticle();
+    public void user_delete_the_article(DataTable dataTable) {
+    	List<Map<String,String>> article=dataTable.asMaps();
+		String delTitle=article.get(0).get("articleTitle");
+		WebElement delelement=deleteArticlePage.locateDelArticle(driver, delTitle);
+	    deleteArticlePage.deleteArticle(delelement);
     }
     @Then("should the article to be deleted")
     public void should_the_article_to_be_deleted() {
-    	Assert.assertEquals(upArticle.deleteCheck(), "Articles not available.");
+    	Assert.assertEquals(deleteArticlePage.deleteCheck(), "Articles not available.");
     }  
 }

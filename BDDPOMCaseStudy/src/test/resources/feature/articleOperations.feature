@@ -29,19 +29,20 @@ When User create the new Article
 | articleTitle | description | body | tags |
 | arti | 2 | des | auto |
 Then Should display the new Article Title
- 
-Scenario: User delete the Article
-Given User is on deleteArticlePage
-| articleTitle |
-| arti2 |
-When User delete the Article
-Then should the article to be deleted
 
 Scenario: User update the Article
 Given User is on updateArticlePage
-| articleTitle |
-| arti |
 When User Update the Article
-| articleBody |
-| automation in testing |
+| articleTitle | articleBody |
+| arti | automation in testing |
 Then Should display the updated Article Title
+| automation in testing |
+ 
+Scenario: User delete the Article
+Given User is on deleteArticlePage
+When User delete the Article
+| articleTitle |
+| arti2 |
+Then should the article to be deleted
+
+
