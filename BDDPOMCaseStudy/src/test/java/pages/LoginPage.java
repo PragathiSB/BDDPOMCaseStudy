@@ -1,6 +1,7 @@
 package pages;
 
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -47,5 +48,19 @@ public class LoginPage {
 	public String inValidMsg()
 	{
 		return invalidmsg.getText();
+	}
+	
+	public WebElement validUserName(WebDriver driver,String userName) {
+    	WebElement ele=driver.findElement(By.xpath("//div[contains(text(),'"+userName+"')]"));
+    	return ele;
+    }
+	
+	
+	public String checkInValidLogin() {
+		   return invalidmsg.getText();
+	   }
+	
+	public String checkValidLogin(WebElement ele) {
+		return ele.getText();
 	}
 }

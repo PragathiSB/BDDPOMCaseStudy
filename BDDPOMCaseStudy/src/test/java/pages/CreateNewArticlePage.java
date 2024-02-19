@@ -25,6 +25,9 @@ public class CreateNewArticlePage {
 	@FindBy(xpath="//span[text()='Title already exists.. ']")
 	WebElement invalidMsg;
 	
+	@FindBy(xpath="//h1[contains(text(),'arti')]")
+	WebElement hdr;
+	
 	public CreateNewArticlePage(WebDriver driver)
 	{
 		PageFactory.initElements(driver, this);
@@ -49,5 +52,9 @@ public class CreateNewArticlePage {
 		return invalidMsg.getText();
 	}
 	
+	public String getHeading()
+	{
+		return hdr.getText();
+	}
 
 }

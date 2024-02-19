@@ -14,6 +14,7 @@ When User enter Valid Credentials
 | emailid | password |
 | pragathisayee@gmail.com | pragathi8 |
 Then Should display the success login message
+| pragathi |
  
  
 Scenario: User Create the Article with duplicate Title
@@ -29,6 +30,7 @@ When User create the new Article
 | articleTitle | description | body | tags |
 | arti | 2 | des | auto |
 Then Should display the new Article Title
+| arti |
 
 Scenario: User update the Article
 Given User is on updateArticlePage

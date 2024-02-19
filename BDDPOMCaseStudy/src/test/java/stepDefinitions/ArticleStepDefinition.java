@@ -19,7 +19,7 @@ import pages.DeleteArticlePage;
 import pages.HomePage;
 import pages.LoginPage;
 import pages.UpdateArticlePage;
-import pages.ViewArticlePage;
+
 
 public class ArticleStepDefinition {
 	WebDriver driver;
@@ -27,7 +27,6 @@ public class ArticleStepDefinition {
     LoginPage loginPage;
     Dashboard dashboard;
     CreateNewArticlePage crnwArticle;
-    ViewArticlePage vwpage;
     DeleteArticlePage deleteArticlePage;
     UpdateArticlePage updateArticlePage;
     
@@ -41,7 +40,7 @@ public class ArticleStepDefinition {
 		  crnwArticle=new CreateNewArticlePage(driver);
 		  deleteArticlePage= new  DeleteArticlePage(driver);
 		  updateArticlePage=new UpdateArticlePage(driver);
-		  vwpage=new ViewArticlePage(driver);
+
     }
 
     @Given("User is on the login Page")
@@ -60,9 +59,11 @@ public class ArticleStepDefinition {
         
     }
     @Then("Should display the success login message")
-    public void should_display_the_success_login_message() {
-    	String name=driver.findElement(By.xpath("//div[contains(text(),'pragathi')]")).getText();
-		Assert.assertEquals(name,"pragathi");
+    public void should_display_the_success_login_message(DataTable dataTable) {
+    	List<String> msgs=dataTable.asList();
+		String userName=msgs.get(0);
+		WebElement ele=loginPage.validUserName(driver,userName);
+	    Assert.assertEquals(loginPage.checkValidLogin(ele),userName);
     }
     
     @Given("User is on login Page")
@@ -95,8 +96,7 @@ public class ArticleStepDefinition {
     	 String articletitle=article.get(0).get("articleTitle");
 		 String description=article.get(0).get("description");
 		 String	body=article.get(0).get("body");
-		 String tags=article.get(0).get("tags");
-		 dashboard.navigateToNewArticlePage(); 
+		 String tags=article.get(0).get("tags"); 
 		 crnwArticle.createNewArticle(articletitle,description,body,tags);
     }
     @Then("Should display the duplicate article message")
@@ -118,13 +118,15 @@ public class ArticleStepDefinition {
 		 crnwArticle.createNewArticle(articletitle,description,body,tags);
     }
     @Then("Should display the new Article Title")
-    public void should_display_the_new_article_title() {
-    	 Assert.assertEquals(vwpage.getHeading(),"arti");
+    public void should_display_the_new_article_title(DataTable dataTable) {
+    	List<String> msg=dataTable.asList();
+		String artiTitle=msg.get(0);
+    	 Assert.assertEquals(crnwArticle.getHeading(),artiTitle);
     }
     
     @Given("User is on updateArticlePage")
     public void user_is_on_update_article_page() {
-    	updateArticlePage.homePage();
+    	updateArticlePage.navigateToProfile();
        
     }
     @When("User Update the Article")
@@ -141,13 +143,13 @@ public class ArticleStepDefinition {
     public void should_display_the_updated_article_title(DataTable dataTable) {
     	List<String> msgs=dataTable.asList();
 		String expmsg=msgs.get(0);
-		WebElement upele=updateArticlePage.getUpdateArticleElement(driver, expmsg);
-		Assert.assertEquals(updateArticlePage.updateArticleValidate(upele),expmsg);
+		WebElement updateBody=updateArticlePage.getUpdateArticleElement(driver, expmsg);
+		Assert.assertEquals(updateArticlePage.updateArticleValidate(updateBody),expmsg);
     }
     
     @Given("User is on deleteArticlePage")
     public void user_is_on_delete_article_page() {
-    	deleteArticlePage.home();
+    	deleteArticlePage.navigateToProfile();
     }
     @When("User delete the Article")
     public void user_delete_the_article(DataTable dataTable) {

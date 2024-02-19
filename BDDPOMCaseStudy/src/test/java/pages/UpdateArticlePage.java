@@ -25,7 +25,8 @@ public class UpdateArticlePage {
      @FindBy(xpath="(//button)[2]")
      WebElement globalFeed;
 
-
+     @FindBy(xpath = "(//a[@class=\"author\"])[1]")
+ 	WebElement profile;
      
      public WebElement articleTitleElement(WebDriver driver,String articleTitle) {
     	 WebElement ele=driver.findElement(By.xpath("//h1[contains(text(),'"+articleTitle+"')]"));
@@ -42,8 +43,8 @@ public class UpdateArticlePage {
     	 home.click();
     	 globalFeed.click();
      }
-	public void update(WebElement ele,String text) {
-		     ele.click();
+	public void update(WebElement articleTitle,String text) {
+		     articleTitle.click();
 	         editBtn.click();   
 	    	 body.clear();
 	    	 body.sendKeys(text);  
@@ -52,6 +53,13 @@ public class UpdateArticlePage {
 	public String updateArticleValidate(WebElement check) {
 		return check.getText();
 	}
+	
+	
+	public void navigateToProfile()
+		{
+			profile.click();
+		
+		}
 	
 	
 }

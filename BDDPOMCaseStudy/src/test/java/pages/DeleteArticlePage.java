@@ -18,7 +18,8 @@ public class DeleteArticlePage {
     WebElement home;
     @FindBy(xpath="(//button)[2]")
     WebElement globalFeed;
-
+    @FindBy(xpath = "(//a[@class=\"author\"])[1]")
+   	WebElement profile;
 
 	 public DeleteArticlePage(WebDriver driver) {
 		 this.driver=driver;
@@ -43,4 +44,9 @@ public class DeleteArticlePage {
 	 public String deleteCheck() {
 		 return check.getText();
 	 }
+	 
+	 public void navigateToProfile()
+	 {
+			profile.click();
+     }
 }
