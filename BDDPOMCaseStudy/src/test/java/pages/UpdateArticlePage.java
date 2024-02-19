@@ -14,7 +14,7 @@ public class UpdateArticlePage {
     WebElement articleTitle;
     @FindBy(xpath="//input[@class='form-control ' and @name='description']")
     WebElement description;
-    @FindBy(xpath="//textArea[@rows='8']")
+    @FindBy(xpath="//textArea[@name='body']")
     WebElement body;
     @FindBy(xpath="//input[@placeholder='Enter tags']")
     WebElement tag;
@@ -25,7 +25,7 @@ public class UpdateArticlePage {
      @FindBy(xpath="(//button)[2]")
      WebElement globalFeed;
 
-     @FindBy(xpath = "(//a[@class=\"author\"])[1]")
+     @FindBy(xpath = "(//a[@class='author'])[1]")
  	WebElement profile;
      
      public WebElement articleTitleElement(WebDriver driver,String articleTitle) {
@@ -56,10 +56,10 @@ public class UpdateArticlePage {
 	
 	
 	public void navigateToProfile()
-		{
+	{
 			profile.click();
 		
-		}
+	}
 	
 	
 }
