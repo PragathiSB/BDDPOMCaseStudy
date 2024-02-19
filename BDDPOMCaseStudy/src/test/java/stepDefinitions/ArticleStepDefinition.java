@@ -159,7 +159,9 @@ public class ArticleStepDefinition {
 	    deleteArticlePage.deleteArticle(delelement);
     }
     @Then("should the article to be deleted")
-    public void should_the_article_to_be_deleted() {
-    	Assert.assertEquals(deleteArticlePage.deleteCheck(), "Articles not available.");
+    public void should_the_article_to_be_deleted(DataTable dataTable) {
+    	List<String> delmsgs=dataTable.asList();
+		String expMsg=delmsgs.get(0);
+    	Assert.assertEquals(deleteArticlePage.deleteCheck(),expMsg);
     }  
 }

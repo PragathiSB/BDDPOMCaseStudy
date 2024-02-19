@@ -46,5 +46,6 @@ When User delete the Article
 | articleTitle |
 | arti2 |
 Then should the article to be deleted
+| Articles not available. |
 
 
