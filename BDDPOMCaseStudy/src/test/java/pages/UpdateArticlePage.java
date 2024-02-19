@@ -12,7 +12,7 @@ public class UpdateArticlePage {
     WebElement editBtn;
     @FindBy(xpath="//input[@placeholder='Article Title']")
     WebElement articleTitle;
-    @FindBy(xpath="//input[@class='form-control ' and @name='description']")
+    @FindBy(xpath="//input[@name='description']")
     WebElement description;
     @FindBy(xpath="//textArea[@name='body']")
     WebElement body;
